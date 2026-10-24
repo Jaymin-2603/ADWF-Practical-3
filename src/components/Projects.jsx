@@ -62,9 +62,9 @@ function ErrorMessage({ message, onRetry }) {
   );
 }
 
-function RepoList({ repositories }) {
+function RepoList({ repositories, search }) {
   if (repositories.length === 0) {
-    return <p className="repo-empty">No repositories match this search.</p>;
+    return <p className="repo-empty">{search.trim() ? 'No repositories match this search.' : 'No public repositories are available right now.'}</p>;
   }
 
   return (
@@ -151,7 +151,7 @@ export default function Projects() {
           {loading ? <Spinner /> : error ? <ErrorMessage message={error} onRetry={() => setAttempt((value) => value + 1)} /> : (
             <>
               <p className="repo-count" aria-live="polite">Showing {visibleRepos.length} of {repos.length} public repositories</p>
-              <RepoList repositories={visibleRepos} />
+              <RepoList repositories={visibleRepos} search={search} />
             </>
           )}
         </div>
